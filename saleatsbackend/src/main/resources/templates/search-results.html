@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+		/>
+		<link rel="shortcut icon" type="image/png" href="favicon.png" />
+
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/css/bootstrap.min.css?3984"
+		/>
+		<link rel="stylesheet" type="text/css" href="style.css?4773" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="/css/font-awesome.min.css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Lobster&display=swap&subset=latin,latin-ext"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<title>Search Results</title>
+
+		<!-- Analytics -->
+
+		<!-- Analytics END -->
+	</head>
+	<body>
+		<!-- Main container -->
+		<div class="page-container">
+			<div class="bloc b-divider l-bloc" id="bloc-0">
+				<div class="container bloc-sm">
+					<div class="row">
+						<div class="col">
+							<nav
+								class="navbar navbar-light row navbar-expand-md"
+								role="navigation"
+							>
+								<a
+									class="navbar-brand link-style ltc-mordant-red-19"
+									href="/"
+									>SalEats!</a
+								>
+								<button
+									id="nav-toggle"
+									type="button"
+									class="ml-auto ui-navbar-toggler navbar-toggler border-0 p-0"
+									data-toggle="collapse"
+									data-target=".navbar-33885"
+									aria-expanded="false"
+									aria-label="Toggle navigation"
+								>
+									<span class="navbar-toggler-icon"></span>
+								</button>
+								<div
+									class="collapse navbar-collapse navbar-33885"
+								>
+									<ul
+										class="site-navigation nav navbar-nav ml-auto"
+									>
+										<li class="nav-item">
+											<a
+												href="/"
+												class="nav-link"
+												>Home</a
+											>
+										</li>
+										<li class="nav-item">
+											<a
+												href="/login-sign-up"
+												class="a-btn nav-link"
+												>Login / Sign Up</a
+											>
+                                        </li>
+                                        <li class="nav-item">
+											<a
+												href="/favorites"
+                                                class="nav-link"
+                                                th:if="${username != null}" th:text="Favorites"
+												>Favorites</a
+											>
+                                        </li>
+                                        <li class="nav-item">
+											<a
+												href="/logout"
+                                                class="nav-link"
+                                                th:if="${username != null}"
+												> Log Out</a
+											>
+										</li>
+									</ul>
+								</div>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+            <div id="error">
+                <h3 id="api-error" style="color:red"
+                th:if="${apiError != null}" th:text="${apiError}"></h3>
+            </div>
+            <div id="errorDiv">
+
+            </div>
+			<div class="bloc none l-bloc" id="bloc-3">
+				<div class="container bloc-sm">
+					<div class="row align-items-start">
+						<div class="col-md-6 col">
+							<div class="form-group">
+								<input
+									class="form-control"
+									placeholder="Restaurant Name"
+								/>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-1">
+							<a
+								href="#"
+                                class="btn btn-block btn-mordant-red-19"
+                                id="search-btn"
+                            >
+                            <span class="fa fa-search"></span
+							></a>
+						</div>
+						<div class="col">
+							<div class="form-check">
+								<input
+									class="form-check-input sort_by"
+									type="radio"
+									name="radioSetOne"
+                                    value="option1"
+                                    id="best_match"
+								/>
+								<label class="form-check-label">
+									Best Match
+								</label>
+							</div>
+							<div class="form-check">
+								<input
+									class="form-check-input sort_by"
+									type="radio"
+									name="radioSetOne"
+                                    value="option1"
+                                    id="rating"
+								/>
+								<label class="form-check-label">
+									Rating
+								</label>
+							</div>
+						</div>
+						<div class="col">
+							<div class="form-check">
+								<input
+									class="form-check-input sort_by"
+									type="radio"
+									name="radioSetOne"
+                                    value="option1"
+                                    id="review_count"
+								/>
+								<label class="form-check-label">
+									Review Count
+								</label>
+							</div>
+							<div class="form-check">
+								<input
+									class="form-check-input sort_by"
+									type="radio"
+									name="radioSetOne"
+                                    value="option1"
+                                    id="distance"
+								/>
+								<label class="form-check-label">
+									Distance
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="bloc l-bloc" id="bloc-4">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<input
+									class="form-control"
+									placeholder="Latitude"
+									type="number"
+								/>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<input
+									class="form-control"
+									type="number"
+									placeholder="Longitude"
+								/>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<a
+								href="/"
+								class="btn btn-block btn-cornflower-blue"
+								><span
+									class="fa fa-map-marker icon-spacer"
+								></span
+								>Google Maps (Drop a pin!)</a
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="bloc l-bloc" id="bloc-5">
+				<div class="container bloc-sm">
+					<div class="row">
+						<div class="col">
+							<h2 class="mg-md sm-shadow">
+								Results for “ramen"
+							</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <!-- Start of Restaraunt Container  -->
+            <div class="bloc l-bloc" id="bloc-6" th:each="restaraunt: ${yelpResults}">
+                <div class="container b-divider-dashed bloc-md">
+                    <div class="row">
+                        <div class="col-sm-4 col">
+                            <a th:href="@{/details/{id}(id=${restaraunt.yelpId})}">
+                                <img
+                                src="/img/lazyload-ph.png"
+                                th:data-src= "${restaraunt.imageUrl}"
+                                class="img-fluid mx-auto d-block img-rd-md img-style lazyload"
+                                href="/"
+                                >
+                            </a>
+
+                        </div>
+                        <div class="col-sm-8 col">
+                            <h3 class="mg-md sm-shadow" th:text="${restaraunt.name}">
+
+                            </h3>
+                            <h4 class="mg-md" th:text="${restaraunt.address}">
+                                <br />
+                            </h4>
+                            <h4 class="mg-md">
+                                <a class="link-0-style" href="/" th:text="${restaraunt.yelpPageUrl}"
+                                    ></a
+                                ><br />
+                            </h4>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Restaraunt Container  -->
+
+
+			<!-- ScrollToTop Button -->
+			<a
+				class="bloc-button btn btn-d scrollToTop"
+				onclick="scrollToTarget('1',this)"
+				><span class="fa fa-chevron-up"></span
+			></a>
+			<!-- ScrollToTop Button END-->
+
+			<div class="bloc none l-bloc" id="bloc-2">
+				<div class="container bloc-lg">
+					<div class="row">
+						<div class="col">
+							<div class="form-group text-lg-center">
+								<label class="text-lg-center">
+									Made by your friendly CP
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Main container END -->
+
+		<script src="/js/jquery-3.3.1.min.js?9673"></script>
+		<script src="/js/bootstrap.bundle.min.js?8114"></script>
+		<script src="/js/blocs.min.js?9424"></script>
+		<script src="/js/lazysizes.min.js" defer></script>
+		<!-- Additional JS END -->
+        <script src='/myJs/search-results.js' defer></script>
+		<!-- Preloader -->
+		<div id="page-loading-blocs-notifaction" class="page-preloader"></div>
+		<!-- Preloader END -->
+	</body>
+</html>
